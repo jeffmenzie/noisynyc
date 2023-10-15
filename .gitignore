@@ -14,3 +14,6 @@ notes.txt
 # JS
 node_modules/
 Tokens.js
+
+!package.json
+!package-lock.json
