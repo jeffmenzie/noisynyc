@@ -1,0 +1,119 @@
+@import "../global.css";
+
+.filterContainer {
+    box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%),
+        0 1px 5px 0 rgb(0 0 0 / 12%);
+    border-radius: 0px;
+
+    background-color: var(--color-grey-1);
+    /* align-items: center; */
+
+    box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%),
+        0 1px 5px 0 rgb(0 0 0 / 12%);
+    border-radius: 0px;
+    margin: 5px 0px 0px 0px;
+    padding: 10px 20px;
+
+    background-color: var(--color-white);
+}
+
+.filterIntroduction {
+    font-family: var(--font-sans);
+    font-size: 1em;
+    font-weight: 500;
+    color: var(--color-black-2);
+    padding: 5px 0px 10px 5px;
+    border-bottom: 1px solid var(--color-grey-2);
+    margin-bottom: 10px;
+}
+
+.filterFlexContainer {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.filterItem {
+    flex: 1 1 50%;
+}
+
+.filterLabel {
+    font-family: var(--font-sans);
+    font-size: 0.8em;
+    font-weight: 500;
+    color: var(--color-black-2);
+    padding-bottom: 5px;
+}
+
+.filterInput {
+    min-width: 250px;
+    padding: 5px 4px;
+    font-family: var(--font-sans);
+    font-size: 0.8em;
+    font-weight: 500;
+    border: 1px solid var(--color-grey-2);
+    border-radius: 0px;
+}
+
+.filterInput[type="text"]:focus {
+    background-color: var(--color-warning-yellow);
+    border: 1px solid var(--color-grey-2);
+    border-radius: 0px;
+    outline: 0;
+}
+
+.filterRadioContainer {
+    margin: 5px 0px;
+}
+
+.filterRadioContainer input[type="radio"] {
+    opacity: 0;
+    position: fixed;
+    width: 0;
+}
+
+.filterRadioContainer label {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.8em;
+    font-weight: 500;
+    border-radius: 2px;
+    color: var(--color-white);
+    background-color: var(--color-grey-2);
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.filterRadioContainer label:hover {
+    background-color: var(--color-blue-3);
+}
+
+.filterRadioContainer input[type="radio"]:checked + label {
+    background-color: var(--color-blue-3);
+}
+
+@media (max-width: 750px) {
+    .filterFlexContainer {
+        margin: 5px 4px;
+        flex-wrap: wrap;
+    }
+
+    .filterItem {
+        flex: 100%;
+    }
+
+    .filterItem:first-child {
+        margin-bottom: 20px;
+        margin-top: 5px;
+    }
+
+    .filterContainer {
+        padding: 10px 10px;
+    }
+
+    .filterIntroduction {
+        line-height: 125%;
+        text-align: center;
+    }
+}

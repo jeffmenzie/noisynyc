@@ -9,7 +9,8 @@ noisynyc-etl/output/
 *.geojson
 *.xlsx
 notes.txt
+*.json
 
 # JS
 node_modules/
-Token.js
+Tokens.js

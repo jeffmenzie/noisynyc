@@ -1,0 +1,140 @@
+@import "../global.css";
+
+.complaintTypeContainer {
+    width: 100%;
+    margin: 0px 0px 15px 0px;
+    padding-bottom: 10px;
+    padding-top: 5px;
+    border-top: 1px solid var(--color-grey-3);
+}
+
+.complaintTypeFlexContainer {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}
+
+.complaintTypeFlexName {
+    flex: 40%;
+    text-align: left;
+}
+
+.complaintTypeFlexItem {
+    flex: 20%;
+}
+
+.complaintTypeFlexSpacer {
+    flex: 0%;
+    display: none;
+}
+
+.complaintDescriptorFlexContainer {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}
+
+.complaintDescriptorFlexName {
+    flex: 40%;
+    text-align: left;
+}
+
+.complaintDescriptorFlexItem {
+    flex: 20%;
+}
+
+.complaintTypeText {
+    font-family: var(--font-sans);
+    font-size: 0.9em;
+    font-weight: 500;
+    padding: 5px 0px;
+    color: var(--color-blue-4);
+}
+
+.complaintTypeColumnText {
+    font-family: var(--font-sans);
+    font-size: 0.9em;
+    font-weight: 500;
+    padding: 5px 0px;
+    color: var(--color-blue-4);
+}
+
+.complaintDescriptorText {
+    font-family: var(--font-sans);
+    font-size: 0.9em;
+    font-weight: 400;
+    padding: 5px 0px;
+    color: var(--color-black-2);
+}
+
+.complaintDescriptorText::before {
+    content: "‣";
+    padding: 0px 5px 0px 0px;
+}
+
+.complaintValueText {
+    font-family: var(--font-sans);
+    font-size: 0.9em;
+    font-weight: 500;
+    padding: 5px 0px 5px 0px;
+    color: var(--color-black-2);
+}
+
+@media (max-width: 765px) {
+    .complaintTypeFlexContainer {
+        flex-wrap: wrap;
+    }
+
+    .complaintTypeContainer {
+        border-top: none;
+    }
+
+    .complaintTypeFlexName {
+        flex: 100%;
+        background-color: var(--color-blue-5);
+        border-radius: 2px;
+        padding: 5px;
+        margin-bottom: 5px;
+    }
+
+    .complaintTypeText {
+        color: var(--color-white-2);
+    }
+
+    .complaintTypeFlexItem {
+        flex: 22%;
+        padding-bottom: 5px;
+    }
+
+    .complaintTypeFlexSpacer {
+        flex: 0%;
+        display: none;
+    }
+
+    .complaintDescriptorText {
+        color: var(--color-grey-4);
+    }
+
+    .complaintDescriptorText::before {
+        content: "";
+    }
+
+    .complaintDescriptorFlexContainer {
+        flex-wrap: wrap;
+        flex: 25%;
+        border-top: 1px solid var(--color-grey-2);
+    }
+
+    .complaintDescriptorFlexContainer:last-child {
+        border-bottom: 1px solid var(--color-grey-2);
+    }
+
+    .complaintDescriptorFlexName {
+        flex: 100%;
+    }
+
+    .complaintValueText {
+        font-weight: 600;
+        font-family: var(--font-mono);
+    }
+}

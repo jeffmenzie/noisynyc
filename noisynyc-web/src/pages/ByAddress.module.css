@@ -1,0 +1,127 @@
+@import "../global.css";
+
+.byAddressOuterContainer {
+    width: 100%;
+    margin: 0px 0px 10px 0px;
+}
+
+.byAddressInnerContainer {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0px 10px 10px 10px;
+    overflow: hidden;
+}
+
+.objectContainerSearchBar {
+    box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%),
+        0 1px 5px 0 rgb(0 0 0 / 12%);
+    border-radius: 0px;
+
+    margin: 15px 0px 0px 0px;
+    padding: 0px;
+
+    background-color: var(--color-white);
+    align-items: center;
+}
+
+.objectContainer {
+    box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%),
+        0 1px 5px 0 rgb(0 0 0 / 12%);
+    border-radius: 0px;
+    margin: 15px 0px 0px 0px;
+    padding: 20px;
+    background-color: var(--color-white);
+    align-items: center;
+}
+
+.objectContainerTop {
+    background-color: var(--color-black-2);
+    padding: 10px 20px 10px 20px;
+}
+
+.objectContainerBottom {
+    padding: 20px 20px 10px 20px;
+}
+
+.introText {
+    font-family: var(--font-sans);
+    font-size: 0.9em;
+    font-weight: 500;
+    color: var(--color-white-2);
+}
+
+.helpText {
+    font-family: var(--font-sans);
+    font-size: 0.8em;
+    font-weight: 300;
+    color: var(--color-grey-5);
+    padding: 20px 0px 0px 5px;
+    font-style: italic;
+}
+
+.mapOuterContainer {
+    width: 100%;
+    height: 80vh;
+    z-index: -999;
+    border-top: 1px solid var(--color-grey-2);
+    border-bottom: 1px solid var(--color-grey-2);
+    margin: 15px 0px;
+}
+
+.mapContainerShow {
+    display: block;
+}
+
+.mapContainerHide {
+    display: none;
+}
+
+.mapContainer {
+    height: 100%;
+}
+
+.downloadTextIntro {
+    font-family: var(--font-sans);
+    font-size: 0.8em;
+    font-weight: 400;
+    color: var(--color-black-3);
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+
+.actionButton {
+    font-family: var(--font-sans);
+    font-size: 0.8em;
+    font-weight: 500;
+    background-color: var(--color-blue-3);
+    padding: 5px 10px;
+    border-radius: 2px;
+    margin-right: 20px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.actionButtonText {
+    color: var(--color-white);
+    text-decoration: none;
+}
+
+@media (max-width: 765px) {
+    .objectContainerSearchBar {
+        margin: 15px 0px 0px 0px;
+    }
+
+    .objectContainer {
+        margin: 15px 0px 0px 0px;
+        padding: 10px;
+    }
+
+    .introText {
+        text-align: center;
+        font-size: 0.8em;
+    }
+
+    .objectContainerTop {
+        background-color: var(--color-blue-5);
+    }
+}

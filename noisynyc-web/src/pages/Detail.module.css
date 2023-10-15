@@ -1,0 +1,85 @@
+@import "../global.css";
+
+.detailOuterContainer {
+    width: 100%;
+    margin: 0px 0px 10px 0px;
+}
+
+.detailInnerContainer {
+    max-width: 1200px;
+    margin: auto;
+    padding: 10px;
+    overflow: hidden;
+}
+
+.objectContainer {
+    box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%),
+        0 1px 5px 0 rgb(0 0 0 / 12%);
+    border-radius: 0px;
+    margin: 10px 0px 0px 0px;
+    padding: 20px 5px 10px 5px;
+    background-color: var(--color-white);
+}
+
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.actionButton {
+    font-family: var(--font-sans);
+    font-size: 0.8em;
+    font-weight: 500;
+    float: right;
+    background-color: var(--color-blue-3);
+    padding: 5px 10px;
+    border-radius: 2px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.actionButtonText {
+    color: var(--color-white);
+    text-decoration: none;
+}
+
+.actionLink {
+    color: var(--color-white);
+    text-decoration: none;
+}
+
+.detailHeader {
+    font-family: var(--font-sans);
+    font-size: 1em;
+    font-weight: 500;
+    min-width: 250px;
+    padding: 5px 10px;
+}
+
+.svgContainer {
+    padding: 5px;
+}
+
+@media (max-width: 750px) {
+    .headerContainer {
+        justify-content: center;
+        align-content: center;
+    }
+
+    .detailHeader {
+        text-align: center;
+    }
+
+    .backButton {
+        margin-right: 0px;
+    }
+
+    .objectContainer {
+        margin: 0px;
+        padding: 10px 15px 10px 15px;
+    }
+}

@@ -1,0 +1,37 @@
+@import "../global.css";
+
+.mapFilterOuterContainer {
+    max-width: fit-content;
+    text-align: center;
+    margin: auto;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.mapOuterContainer {
+    position: fixed;
+    top: 50px;
+    left: 0;
+    width: 100dvw;
+    height: 100dvh;
+    z-index: -999;
+}
+
+.mapContainer {
+    height: 100%;
+}
+
+
+@media (max-width: 765px) {
+    .mapFilterOuterContainer{
+         max-width: 80%;
+         width: max-content;
+    }
+
+    .mapOuterContainer {
+        top: 65px;
+    }
+
+}
+

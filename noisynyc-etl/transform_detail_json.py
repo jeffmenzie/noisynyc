@@ -56,7 +56,7 @@ try:
                             FROM 	COMPLAINT_DATA_RAW
                             WHERE	UPPER ({lt_query_string}) NOT LIKE '%UNSPECIFIED%' 
                             AND	LENGTH ({lt_query_string}) > 0 
-                            ORDER BY 1''')
+                            ORDER BY 1 ''')
 
         rows = cursor.fetchall()
         for row in rows:

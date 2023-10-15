@@ -123,6 +123,9 @@ try:
         except:
             logging.warning('Unable to create raw table')
 
+    # make sure WAL is enabled
+    logging.info('Running PRAGMA journal_mode = wal')
+    cursor.execute(''' PRAGMA journal_mode = wal; ''')
 
 
     logging.info('Inserting raw data')
@@ -239,10 +242,14 @@ try:
     logging.info("Preparing to recreate index IDX_PK_COMPLAINT_DATA")
     cursor.execute('''DROP INDEX IF EXISTS IDX_PK_COMPLAINT_DATA; ''')	
     cursor.execute('''CREATE UNIQUE INDEX IDX_PK_COMPLAINT_DATA ON COMPLAINT_DATA_RAW (UNIQUE_KEY); ''')	
-    db.commit()
-    logging.info("Completed updating index IDX_PK_COMPLAINT_DATA")
 
+    logging.info("Preparing to recreate index IDX_CD_ZIP")
+    cursor.execute('''DROP INDEX IF EXISTS IDX_CD_ZIP; ''')	
+    cursor.execute('''CREATE INDEX IDX_CD_ZIP ON COMPLAINT_DATA_RAW (INCIDENT_ZIP); ''')	
 
+    logging.info("Preparing to recreate index IDX_CD_COMMUNITY_BOARD")
+    cursor.execute('''DROP INDEX IF EXISTS IDX_CD_COMMUNITY_BOARD; ''')	
+    cursor.execute('''CREATE INDEX IDX_CD_COMMUNITY_BOARD ON COMPLAINT_DATA_RAW (COMMUNITY_BOARD); ''')	
 
     # update entry age
     logging.info("Preparing to update CREATED_AGE")
@@ -289,7 +296,6 @@ try:
     cursor.execute(''' CREATE UNIQUE INDEX "IDX_DATE_MAP" ON "DATE_MAP" ("CALCULATED_DATE"); ''')
 
 
-
     # +*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*
     # Rebuild BYADDRESS_SUMMARY_DATA
 
@@ -317,6 +323,11 @@ try:
                                    ,ROUND (LONGITUDE,6) ''')
     db.commit()
     logging.info("Finished creating BYADDRESS_SUMMARY_DATA table")
+
+
+    # run Optimize
+    logging.info('Running PRAGMA optimize')
+    cursor.execute(''' PRAGMA optimize; ''')
 
 
     logging.info('Finished')

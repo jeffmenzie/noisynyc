@@ -36,7 +36,7 @@ try:
     cursor = db.cursor()
 
 
-    logging.info("Dropping DATE_MAP table")
+    logging.info("Dropping HEATMAP_DATA table")
     cursor.execute(''' DROP TABLE IF EXISTS HEATMAP_DATA; ''')	
 
 
@@ -90,7 +90,7 @@ try:
     ''')
     db.commit()
 
-    logging.info("Dropping DATE_MAP table")
+    logging.info("Dropping IDX_HEATMAP index")
     cursor.execute(''' DROP INDEX IF EXISTS IDX_HEATMAP; ''')	
 
 
@@ -142,6 +142,8 @@ try:
     f = open('./output/complaints_y.geojson', 'w')
     f.write(str(geoJsonFeatureCollection))
     f.close()
+
+    logging.info('Finished')
 
 except:
     logging.error('Error creating heatmap files')
