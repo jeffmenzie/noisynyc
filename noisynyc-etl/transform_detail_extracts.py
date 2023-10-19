@@ -23,7 +23,7 @@ log_file_suffix = datetime.datetime.now().strftime('%Y-%m-%d.%H_%M_%S')
 logging.basicConfig(level=logging.INFO, 
 					format='%(asctime)s %(levelname)-8s %(message)s',
 					datefmt='%Y-%m-%d %H:%M:%S',
-					filename='./logs/transform_detail_extracts' + log_file_suffix + '.log')
+					filename='./logs/transform_detail_extracts_' + log_file_suffix + '.log')
 logging.info ('Starting')
 
 
@@ -78,6 +78,7 @@ try:
                                 FROM     COMPLAINT_DATA_RAW                                 
                                 WHERE	 CREATED_AGE >= 1 AND CREATED_AGE <= 1825 
                                   AND 	{lt_query_string} = ?
+                                ORDER BY CREATED_AGE
                                             ''', [location])
             rows = cursor.fetchall()
 

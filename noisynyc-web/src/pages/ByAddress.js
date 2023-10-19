@@ -43,13 +43,9 @@ function ByAddress(props) {
 
     // handle selection
     const handleChange = (value) => {
-        console.log("handleChange value: " + value.value[0] + "|" + value.value[1]);
-        console.log("handleChange label: " + value.label);
         setLng(value.value[0]);
         setLat(value.value[1]);
         setSelectedValue(value);
-
-        console.log(value.place_name);
     };
 
     mapboxgl.accessToken = mapboxApiToken;
@@ -257,7 +253,7 @@ function ByAddress(props) {
         const latitudeToUse = lat;
 
         const res = await fetch(
-            `${apiUrlPrefix}api/byaddressexport?latitude=${latitudeToUse}&longitude=${longitudeToUse}`
+            `${apiUrlPrefix}/byaddressexport?latitude=${latitudeToUse}&longitude=${longitudeToUse}`
         )
             .then((result) => {
                 const header = result.headers.get("Content-Disposition");

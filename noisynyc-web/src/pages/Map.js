@@ -64,7 +64,6 @@ function Map(props) {
                         let r = this.responseText;
                         let p = JSON.parse(r);
                         let point_address = p[0][1] || "Not Available"; // not available if no value found
-                        console.log("working here inside point_request");
                         new mapboxgl.Popup()
                             .setLngLat(point_coordinates)
                             .setHTML(
@@ -78,7 +77,7 @@ function Map(props) {
                             .addTo(map.current);
                     }
                 };
-                console.log("getting point_url");
+        
                 let point_url = `${apiUrlPrefix}/heatmaplocationdetail?period=${point_period}&latitude=${point_latitude}&longitude=${point_longitude}`;
 
                 point_request.open("GET", point_url, true);
@@ -91,7 +90,6 @@ function Map(props) {
         if (map.current.getLayer("complaintSource-heat")) {
             map.current.removeLayer("complaintSource-heat");
             map.current.removeLayer("complaintSource-point");
-            console.log("done!");
         }
 
         const heatmapDensity = 1;

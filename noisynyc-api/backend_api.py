@@ -39,7 +39,7 @@ def home():
     return ("Error", 500)
 
 
-@app.route('/healthcheck', methods=['GET'])
+@app.route('/api/healthcheck', methods=['GET'])
 def healthCheck():
     try:
         response = jsonify( {'status': 'ok' })

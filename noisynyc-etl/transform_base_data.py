@@ -23,7 +23,7 @@ log_file_suffix = datetime.datetime.now().strftime('%Y-%m-%d.%H_%M_%S')
 logging.basicConfig(level=logging.INFO, 
 					format='%(asctime)s %(levelname)-8s %(message)s',
 					datefmt='%Y-%m-%d %H:%M:%S',
-					filename='./logs/transform_base_data' + log_file_suffix + '.log')
+					filename='./logs/transform_base_data_' + log_file_suffix + '.log')
 logging.info ('Starting')
 
 
@@ -31,7 +31,6 @@ try:
     try:
         complaintsDatabaseFile = 'complaints.db'
         db = sqlite3.connect(complaintsDatabaseFile, factory=sqlite3.Connection)
-        cursor = db.cursor()
         logging.info ('Connection to complaints DB successful')
     except:
         logging.error ('Problem connecting to complaints database')
@@ -47,12 +46,14 @@ try:
     location_data = {}
 
     for location_type in location_types:
+        logging.info ('Starting location type: ' + location_type)
 
         if location_type == 'ZIP5':
             lt_query_string = 'INCIDENT_ZIP'
         else:
             lt_query_string = location_type
-
+        
+        cursor = db.cursor()
         cursor.execute(f'''  
             
         WITH BASE_DATA AS
@@ -169,6 +170,7 @@ try:
                 
                     ''')
         rows = cursor.fetchall()
+        cursor.close()
         logging.info ('Cursor completed successfully')
 
         complaint_location_values = []
@@ -202,6 +204,8 @@ try:
             complaint_location_values.append (complaint_data)
 
         location_data[location_type] = complaint_location_values
+
+        logging.info ('Finishing location type: ' + location_type)
         
 
     base_data = {"borough"         : location_data['BOROUGH']

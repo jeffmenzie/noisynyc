@@ -123,17 +123,19 @@ try:
         except:
             logging.warning('Unable to create raw table')
 
-    # make sure WAL is enabled
-    logging.info('Running PRAGMA journal_mode = wal')
-    cursor.execute(''' PRAGMA journal_mode = wal; ''')
-
 
     logging.info('Inserting raw data')
     cursor_date = datetime.datetime.now().strftime('%Y-%m-%d.%H_%M_%S')
     
     db = sqlite3.connect(complaintsDatabaseFile)
     cursor = db.cursor()
-    
+
+    # make sure WAL is enabled
+    logging.info('Running PRAGMA journal_mode = wal')
+    cursor.execute(''' PRAGMA journal_mode = wal; ''')
+
+
+
     for i in complaint_type_json:
 
 
@@ -238,6 +240,14 @@ try:
     db.commit()
     logging.info("Completed updating INCIDENT_ZIP")
 
+    # update entry age
+    logging.info("Preparing to update CREATED_AGE")
+    cursor.execute(''' UPDATE COMPLAINT_DATA_RAW 
+		               SET CREATED_AGE = CAST (JULIANDAY('NOW','LOCALTIME','START OF DAY') - JULIANDAY(CREATED_DATE) AS INT); ''')	
+
+    db.commit()
+    logging.info("Completed updating CREATED_AGE")
+
     # update index
     logging.info("Preparing to recreate index IDX_PK_COMPLAINT_DATA")
     cursor.execute('''DROP INDEX IF EXISTS IDX_PK_COMPLAINT_DATA; ''')	
@@ -251,13 +261,9 @@ try:
     cursor.execute('''DROP INDEX IF EXISTS IDX_CD_COMMUNITY_BOARD; ''')	
     cursor.execute('''CREATE INDEX IDX_CD_COMMUNITY_BOARD ON COMPLAINT_DATA_RAW (COMMUNITY_BOARD); ''')	
 
-    # update entry age
-    logging.info("Preparing to update CREATED_AGE")
-    cursor.execute(''' UPDATE COMPLAINT_DATA_RAW 
-		               SET CREATED_AGE = CAST (JULIANDAY('NOW','LOCALTIME','START OF DAY') - JULIANDAY(CREATED_DATE) AS INT); ''')	
-
-    db.commit()
-    logging.info("Completed updating CREATED_AGE")
+    logging.info("Preparing to recreate index IDX_CD_CREATED_DATE")
+    cursor.execute('''DROP INDEX IF EXISTS IDX_CD_CREATED_DATE; ''')	
+    cursor.execute('''CREATE INDEX IDX_CD_CREATED_DATE ON COMPLAINT_DATA_RAW (CREATED_DATE); ''')	
 
 
     # create and update date_map table

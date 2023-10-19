@@ -23,7 +23,7 @@ log_file_suffix = datetime.datetime.now().strftime('%Y-%m-%d.%H_%M_%S')
 logging.basicConfig(level=logging.INFO, 
 					format='%(asctime)s %(levelname)-8s %(message)s',
 					datefmt='%Y-%m-%d %H:%M:%S',
-					filename='./logs/transform_detail_json' + log_file_suffix + '.log')
+					filename='./logs/transform_detail_json_' + log_file_suffix + '.log')
 logging.info ('Starting')
 
 
