@@ -273,8 +273,7 @@ try:
     db.commit()
 
     logging.info("Creating DATE_MAP table")
-    cursor.execute(''' CREATE TABLE DATE_MAP AS
-                       WITH INC_TABLE AS
+    cursor.execute('''WITH INC_TABLE AS
                        (
                             SELECT		0 AS INC_VALUE
                             UNION	
@@ -282,20 +281,24 @@ try:
                             FROM		INC_TABLE
                             WHERE		INC_VALUE < 1500
                        )
-                       SELECT	I.*
-                               ,STRFTIME('%Y',CALCULATED_DATE_JULIAN) AS CALCULATED_YEAR
-                               ,SUBSTR (STRFTIME('%Y',CALCULATED_DATE_JULIAN),3,2) || '/' || STRFTIME('%m',CALCULATED_DATE_JULIAN) AS CALCULATED_MONTH
-                               ,SUBSTR (STRFTIME('%Y',CALCULATED_DATE_JULIAN),3,2) || '/' || 'Q' || ((STRFTIME('%m', CALCULATED_DATE_JULIAN) + 2) / 3) AS CALCULATED_QUARTER 
-                               ,STRFTIME('%Y',CURRENT_DATE_JULIAN) - STRFTIME('%Y',CALCULATED_DATE_JULIAN) AS TRAILING_YEARS
-                               ,((STRFTIME('%Y',CURRENT_DATE_JULIAN) - STRFTIME('%Y',CALCULATED_DATE_JULIAN)) * 12) + 
-                                STRFTIME('%m',CURRENT_DATE_JULIAN) - STRFTIME('%m',CALCULATED_DATE_JULIAN) AS TRAILING_MONTHS
-                         FROM	(
-                                 SELECT		DATE ('NOW','LOCALTIME','-' || INC_VALUE || ' DAYS') AS CALCULATED_DATE
-                                           ,INC_VALUE AS TRAILING_DAYS
-                                           ,JULIANDAY ('NOW','LOCALTIME','START OF DAY') AS CURRENT_DATE_JULIAN
-                                           ,JULIANDAY ('NOW','LOCALTIME','-' || INC_VALUE || ' DAYS', 'START OF DAY') AS CALCULATED_DATE_JULIAN 
-                                   FROM		INC_TABLE
-                                ) I ; ''')
+	
+	
+                    SELECT	 I.*
+                            ,STRFTIME('%Y',CALCULATED_DATE_JULIAN) AS CALCULATED_YEAR
+                            ,SUBSTR (STRFTIME('%Y',CALCULATED_DATE_JULIAN),3,2) || '/' || STRFTIME('%m',CALCULATED_DATE_JULIAN) AS CALCULATED_MONTH
+                            ,SUBSTR (STRFTIME('%Y',CALCULATED_DATE_JULIAN),3,2) || '/' || 'Q' || ((STRFTIME('%m', CALCULATED_DATE_JULIAN) + 2) / 3) AS CALCULATED_QUARTER 
+                                    
+                            ,DENSE_RANK () OVER (ORDER BY STRFTIME('%Y',CALCULATED_DATE_JULIAN) DESC) - 1 AS TRAILING_YEARS			
+                            ,DENSE_RANK () OVER (ORDER BY SUBSTR (STRFTIME('%Y',CALCULATED_DATE_JULIAN),3,2) || '/' || STRFTIME('%m',CALCULATED_DATE_JULIAN) DESC) - 1 AS TRAILING_MONTHS
+                            ,DENSE_RANK () OVER (ORDER BY SUBSTR (STRFTIME('%Y',CALCULATED_DATE_JULIAN),3,2) || '/' || 'Q' || ((STRFTIME('%m', CALCULATED_DATE_JULIAN) + 2) / 3) DESC) - 1 AS TRAILING_QUARTERS
+                    
+                        FROM	(
+                                SELECT	 DATE ('NOW','LOCALTIME','-' || INC_VALUE || ' DAYS') AS CALCULATED_DATE
+                                        ,INC_VALUE AS TRAILING_DAYS
+                                        ,JULIANDAY ('NOW','LOCALTIME','START OF DAY') AS CURRENT_DATE_JULIAN
+                                        ,JULIANDAY ('NOW','LOCALTIME','-' || INC_VALUE || ' DAYS', 'START OF DAY') AS CALCULATED_DATE_JULIAN 
+                                FROM	 INC_TABLE
+						) I; ''')
     db.commit()
 
     logging.info("Creating IDX_DATE_MAP index on DATE_MAP")
@@ -334,6 +337,10 @@ try:
     # run Optimize
     logging.info('Running PRAGMA optimize')
     cursor.execute(''' PRAGMA optimize; ''')
+
+    # vacuum
+    logging.info('Running PRAGMA vacuum')
+    cursor.execute(''' PRAGMA vacuum; ''')
 
 
     logging.info('Finished')

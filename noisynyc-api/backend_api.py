@@ -240,7 +240,7 @@ def byaddressexport():
                     ,'Distance in Feet']
 
         df['ZIP5'] = df['ZIP5'].astype('string')    
-        df['ZIP5'] = df['Distance in Feet'].astype('int')           
+        df['Distance in Feet'] = df['Distance in Feet'].astype('int')           
         df['Created Date'] = pd.to_datetime(df['Created Date']).dt.strftime('%m/%d/%Y')
    
         file_name =  f'./address_output/Address_Details_{filenameextension}.xlsx'

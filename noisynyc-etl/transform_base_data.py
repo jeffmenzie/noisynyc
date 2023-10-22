@@ -56,20 +56,20 @@ try:
         cursor = db.cursor()
         cursor.execute(f'''  
             
-        WITH BASE_DATA AS
+    WITH BASE_DATA AS
         (
-            SELECT		C.{lt_query_string}
+            SELECT		C.borough
 
                     ,UNIQUE_KEY
-                    ,CASE WHEN D.TRAILING_YEARS  BETWEEN 0 AND 2  THEN 1 ELSE 0 END AS FLAG_3YEAR
-                    ,CASE WHEN D.TRAILING_MONTHS BETWEEN 0 AND 11 THEN 1 ELSE 0 END AS FLAG_12MONTH
-                    ,CASE WHEN D.TRAILING_DAYS   BETWEEN 0 AND 29 THEN 1 ELSE 0 END AS FLAG_30DAYS
+                    ,CASE WHEN D.TRAILING_QUARTERS BETWEEN 1 AND 12 THEN 1 ELSE 0 END AS FLAG_3YEAR
+                    ,CASE WHEN D.TRAILING_MONTHS   BETWEEN 1 AND 12 THEN 1 ELSE 0 END AS FLAG_12MONTH
+                    ,CASE WHEN D.TRAILING_DAYS     BETWEEN 1 AND 30 THEN 1 ELSE 0 END AS FLAG_30DAYS
                             
             FROM		COMPLAINT_DATA_RAW C
                         INNER JOIN DATE_MAP D ON C.CREATED_DATE = D.CALCULATED_DATE
             WHERE		UPPER (C.{lt_query_string}) NOT LIKE '%SPECIFIED%'
             AND		LENGTH (C.{lt_query_string}) > 0
-            AND		D.TRAILING_YEARS BETWEEN 0 AND 2
+            AND		D.TRAILING_YEARS BETWEEN 0 AND 3
         ),
         SUMMARIZED_DATA AS (
             SELECT	 {lt_query_string}
@@ -86,7 +86,7 @@ try:
                     ,CALCULATED_DATE
                     ,CALCULATED_QUARTER AS CALCULATED_PERIOD
             FROM		DATE_MAP
-            WHERE		TRAILING_YEARS BETWEEN 0 AND 2
+            WHERE		TRAILING_QUARTERS BETWEEN 1 AND 12
 
             UNION ALL
             
@@ -95,7 +95,7 @@ try:
                     ,CALCULATED_DATE
                     ,CALCULATED_MONTH AS CALCULATED_PERIOD
             FROM		DATE_MAP	
-            WHERE		TRAILING_MONTHS BETWEEN 0 AND 11
+            WHERE		TRAILING_MONTHS BETWEEN 1 AND 12
 
             UNION ALL
             
@@ -104,7 +104,7 @@ try:
                     ,CALCULATED_DATE
                     ,CALCULATED_DATE AS CALCULATED_PERIOD
             FROM		DATE_MAP	
-            WHERE		TRAILING_DAYS BETWEEN 0 AND 29
+            WHERE		TRAILING_DAYS BETWEEN 1 AND 30
         ),
         LOCATIONS AS (
             SELECT		DISTINCT		
