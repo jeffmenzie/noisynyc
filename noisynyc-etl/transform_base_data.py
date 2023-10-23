@@ -58,12 +58,12 @@ try:
             
     WITH BASE_DATA AS
         (
-            SELECT		C.borough
+            SELECT		C.{lt_query_string}
 
                     ,UNIQUE_KEY
                     ,CASE WHEN D.TRAILING_QUARTERS BETWEEN 1 AND 12 THEN 1 ELSE 0 END AS FLAG_3YEAR
                     ,CASE WHEN D.TRAILING_MONTHS   BETWEEN 1 AND 12 THEN 1 ELSE 0 END AS FLAG_12MONTH
-                    ,CASE WHEN D.TRAILING_DAYS     BETWEEN 1 AND 30 THEN 1 ELSE 0 END AS FLAG_30DAYS
+                    ,CASE WHEN D.TRAILING_DAYS     BETWEEN 3 AND 32 THEN 1 ELSE 0 END AS FLAG_30DAYS
                             
             FROM		COMPLAINT_DATA_RAW C
                         INNER JOIN DATE_MAP D ON C.CREATED_DATE = D.CALCULATED_DATE
@@ -104,7 +104,7 @@ try:
                     ,CALCULATED_DATE
                     ,CALCULATED_DATE AS CALCULATED_PERIOD
             FROM		DATE_MAP	
-            WHERE		TRAILING_DAYS BETWEEN 1 AND 30
+            WHERE		TRAILING_DAYS BETWEEN 3 AND 32
         ),
         LOCATIONS AS (
             SELECT		DISTINCT		

@@ -273,7 +273,8 @@ try:
     db.commit()
 
     logging.info("Creating DATE_MAP table")
-    cursor.execute('''WITH INC_TABLE AS
+    cursor.execute(''' CREATE TABLE DATE_MAP AS
+                       WITH INC_TABLE AS
                        (
                             SELECT		0 AS INC_VALUE
                             UNION	

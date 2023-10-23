@@ -44,6 +44,14 @@
     line-height: 150%;
 }
 
+.aboutLink {
+    font-family: var(--font-sans);
+    font-size: 1.0em;
+    font-weight: 400;
+    color: var(--color-black-2);
+    text-decoration: underline;
+}
 
-
-
+br {
+    margin-bottom: 10px;
+}
